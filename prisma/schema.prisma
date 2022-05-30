@@ -11,6 +11,13 @@ generator client {
 }
 
 model ShortenedUrl {
-  id  String @id
-  url String
+  id    String             @id
+  url   String
+  stats ShortenedUrlStats?
+}
+
+model ShortenedUrlStats {
+  id   String       @id
+  hits Int          @default(0)
+  url  ShortenedUrl @relation(fields: [id], references: [id])
 }

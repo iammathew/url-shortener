@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Get,
   InternalServerErrorException,
+  Param,
   Post,
 } from '@nestjs/common';
 import { IsUrl } from 'class-validator';
@@ -19,6 +21,11 @@ export interface CreateShortenedUrlResponse {
   id: string;
   originalUrl: string;
   shortenedUrl: string;
+}
+
+export interface GetShortenedUrlStatsResponse {
+  id: string;
+  hits: number;
 }
 
 @Controller('url')
@@ -43,5 +50,23 @@ export class UrlController {
         'Error during creation of shortened url',
       );
     }
+  }
+
+  @Post('flush')
+  async flushHits() {
+    await this.urlService.flushHits();
+  }
+
+  @Get(':id/stats')
+  async getStats(
+    @Param('id') id: string,
+  ): Promise<GetShortenedUrlStatsResponse> {
+    const shortenedUrlStats = await this.urlService.getShortenedUrlStatsById(
+      id,
+    );
+    return {
+      id: shortenedUrlStats.id,
+      hits: shortenedUrlStats.hits,
+    };
   }
 }

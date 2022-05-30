@@ -22,6 +22,7 @@ export class AppController {
   async redirect(@Param('id') id: string) {
     try {
       const shortenedUrl = await this.urlService.getShortenedUrlById(id);
+      this.urlService.addHit(id);
       return {
         url: convertToHttps(shortenedUrl.url),
       };
