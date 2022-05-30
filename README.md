@@ -2,6 +2,51 @@
 
 Simple url shortener built using Typescript, Node.js and Nest.js.
 
+## API
+
+### `GET /<id>`
+
+Redirects to the respective page or 404 if id not found
+
+### `POST /url`
+
+Creates a shortened url
+
+Body:
+
+```json
+{
+  "url": "https://google.com"
+}
+```
+
+Response:
+
+```json
+{
+  "id": "abcdef",
+  "originalUrl": "https://google.com",
+  "shortenedUrl": "tier.app/abcedf"
+}
+```
+
+### `GET /url/<id>/stats`
+
+Get stats by shortened url id
+
+Response:
+
+```json
+{
+  "id": "abcdef",
+  "hits": 0
+}
+```
+
+### `POST /url/flush`
+
+Flush stats to database
+
 ## Considerations
 
 ### Length of url
