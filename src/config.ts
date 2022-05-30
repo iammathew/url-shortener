@@ -3,4 +3,8 @@ export const config = {
   stats: {
     flushIntervalMs: 10000,
   },
+  cache: {
+    enabled: true,
+    durationSeconds: 600,
+  },
 };
